@@ -1,41 +1,27 @@
 import java.io.*;
 
+
 public class Main {
     public static void main(String[] args) {
+        String inputFileName = "input.txt";
+        String outputFileName = "output.txt";
 
-        String inputFilePath = "src/input.txt";
-        String outputFilePath = "src/output.txt";
-
-        try {
-
-            FileReader fileReader = new FileReader(inputFilePath);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-
-            FileWriter fileWriter = new FileWriter(outputFilePath);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFileName));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) 
+             {
 
             String line;
-
-
-            while ((line = bufferedReader.readLine()) != null) {
-                // Thay thế từ "Nha Trang" thành "Vũng Tàu" và ghi vào file output.txt
-                line = line.replaceAll("Nha Trang", "Vũng Tàu");
-                bufferedWriter.write(line);
-                bufferedWriter.newLine();
+            while ((line = reader.readLine()) != null) {
+                // Thay thế từ "Nha Trang" bằng "Vũng Tàu"
+                line = line.replace("Nha Trang", "Vũng Tàu");
+                writer.write(line);
+                writer.newLine();
             }
 
+            System.out.println("Đã thay thế và ghi nội dung vào file output.txt");
 
-            bufferedReader.close();
-            bufferedWriter.close();
-
-            System.out.println("");
         } catch (IOException e) {
-            System.out.println("" + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Đã xảy ra lỗi khi đọc hoặc ghi file: " + e.getMessage());
         }
-    }
-}
-
     }
 }
